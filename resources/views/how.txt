@@ -1,0 +1,49 @@
+2. Change .env example to .env
+3. Change database name
+4. Create key -  php artisan key:generate
+5. php artisan make:model name
+6. php artisan make:migration create_names_table
+	- Change schema on books migration
+	- php artisan migrate
+7. Create controller - php artisan make:controller BookController --model=ModelName
+8. Create views
+	- Views(folder)
+		- layouts(folder)
+			- layout.blade.php
+		- books(folder)
+			- index.blade.php
+9. web.php - controller - view
+10. fake data - php artisan make:Factory BookFactory --model=ModelName
+				- edit BookFactory what to create:::: return [
+            'title' => $this->faker->sentence(),
+            'author' => $this->faker->name(),
+            'isbn' => $this->faker->isbn13(),
+            'price' => $this->faker->randomFloat(2, 9, 999),
+        ];
+			- php artisan make:Seeder BookSeeder 
+			- add this to bookseeeder run fucntion ::::  \App\Models\Book::factory()->count(1000)->create();
+
+			- call BookSeeder to seeder ::: $this->call(BookSeeder::class);
+			- php artisan db:seed
+
+11. For pagination - app serveice provider :::
+								Paginator::useBootstrap();
+								use Illuminate\Pagination\Paginator;
+
+12. For pdf - composer require barryvdh/laravel-dompdf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
