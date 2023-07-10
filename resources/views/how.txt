@@ -43,6 +43,9 @@
 12. For pdf - composer require barryvdh/laravel-dompdf
 
 
+https://github.com/mehedi-rucse/Laravel-CRUD-Application/blob/main/resources/views/books/download.blade.php
+
+https://github.com/harun-rucse/laravel-web-engineering/blob/main/resources/views/books/download.blade.php
 
 
 

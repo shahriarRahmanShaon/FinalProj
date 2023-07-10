@@ -1,0 +1,324 @@
+//web application laravel
+1. cmd................................................................
+
+composer create-project laravel/laravel BookStore
+
+vendor file create folder laravel project
+cmd................................................................
+
+composer install
+
+// artisan config:Cache
+
+//for git clone
+
+cmd................................................................
+
+git clone ________________________
+
+2.  change .env.example file name to .env
+
+3.  change database name in .env file--------(book_database)
+
+4.  Generate APK KEY in .env file
+
+cmd................................................................
+
+php artisan key:generate
+
+
+5. run laravel project comand
+cmd ...............................................................
+
+php artisan serve 
+
+//go to provided Link
+
+6. make model (Book)
+
+cmd................................................................
+
+php artisan make:model Book
+
+7. make Controller (BookController) with Model name
+
+cmd................................................................
+
+php artisan make:controller BookController --model=Book
+
+8. make views
+    8.1. make views (layouts) folder
+        make simple views layout----- layout.blade.php
+    8.2 make views (books) folder
+        make simple views(index)----- index.blade.php
+
+
+9. add routes to web file
+
+"""
+Route::get('/books', 'App\Http\Controllers\BookController@index')->name('books.index');
+
+"""
+
+9. Modify functions in the controller index()
+    return view('books.index');
+
+
+----------------------------------------------------------------
+
+10. make migrations(table)
+
+cmd................................................................
+
+php artisan make:migration create_books_table
+
+table name(plural of Model name)
+
+
+11. change migration schema as needed table
+
+Schema::create('books', function (Blueprint $table) {
+                $table->id();
+                $table->string('title');
+                $table->string('author');
+                $table->string('isbn');
+                $table->integer('price');
+                $table->timestamps();
+            });
+
+
+12. run migration for migrate table
+
+cmd................................................................
+
+php artisan migrate
+
+
+13. generate fake data in migration table(factory)
+
+    13.1. database->factories-> create factory BookFactory.php
+
+cmd................................................................
+    php artisan make:factory BookFactory --model=Book
+
+change factoriy defination
+
+return [
+            'title' => $this->faker->sentence(),
+            'author' => $this->faker->name(),
+            'isbn' => $this->faker->isbn13(),
+            'price' => $this->faker->randomFloat(2, 9, 999),
+        ];
+
+************ set data types and requirments ***************************
+
+
+14. create fake data seeder 
+    14.1. database->seeders create seeder BookSeeseer.php
+
+cmd................................................................
+
+    php artisan make:seeder BookSeeder
+
+15. change in BookSeeder---------- (number of fake data) run() function
+
+    \App\Models\Book::factory()->count(100)->create();
+
+16. call BookSeeder from database seeder run() function
+
+********************************
+
+$this->call(BookSeeder::class);
+
+
+************************************************
+    update in Model
+
+    protected $fillable = [
+        'title',
+        'author',
+        'isbn',
+        'price',
+    ];
+
+************************************************
+
+run seeder
+cmd................................................................
+
+php artisan db:seed
+
+
+
+****************************************************************
+
+17. Modify index view for showing all eisting data from the database
+    -> change in view(index)
+    -> change in BookController
+
+    BookController->index()
+
+    $books = Book::orderBy('created_at', 'desc')->paginate(10);
+    return view('books.index', ['books' => $books]);
+
+
+18. add paggination for Boostrap paggination
+
+    app->provider->AppServiceProvider-> boot() function
+
+    ****************
+    \Illuminate\Pagination\Paginator::useBootstrap();
+    ****************any one of the
+
+    use Illuminate\Pagination\Paginator;
+    Paginator::useBootstrap();
+
+
+19. create button +  create option..........
+
+    create-> view
+    add route
+    update controller
+
+    controller-> create()
+    return view('books.create');
+
+    route-> create
+
+    Route::get('/books/create', 'App\Http\Controllers\BookController@create')->name('books.create');
+
+    // change in index view-> add button
+
+
+20. add store route in create view to data store->>>>>>>
+
+    Route::post('/books', 'App\Http\Controllers\BookController@store')->name('books.store');
+
+
+    change in create view->>>>>> add action..........
+
+    <form action="{{ route('books.store') }}" method="POST">
+
+
+    change in BookController->>>>>>>> store()
+
+    $request->validate([
+            'title' => 'required',
+            'author' => 'required',
+            'isbn' => 'required',
+            'price' => 'required|numeric',
+        ]);
+
+
+        $book = Book::create(
+            [
+                'title' => $request->input('title'),
+                'author' => $request->input('author'),
+                'isbn' => $request->input('isbn'),
+                'price' => $request->input('price'),
+            ]
+        );
+
+        return redirect()->route('books.index')->with('success', 'Book created successfully.');
+
+
+    ************************************************
+    
+
+
+21. edit book
+
+    add edit button in index view
+    create edit view
+    add route to
+    update in BookController
+
+
+22. delete book
+
+    add delete button in index view
+    add route to delete
+    update in BookController
+
+
+
+23. PDF DOWNLOAD
+
+add package
+cmd................................................................
+
+composer require barryvdh/laravel-dompdf
+
+    create view DOWNLOAD
+    add route 
+    update in BookController
+
+    <a href="{{ route('books.getPDF') }}" class="btn btn-primary mb-2">GET PDF</a>
+
+    Route::get('/generate-Pdf', 'App\Http\Controllers\BookController@getPDF')->name('books.getPDF');
+
+    use PDF;
+
+    public function getPDF(){
+        $books = Book::inRandomOrder()->limit(50)->get();
+        $pdf = PDF::loadView('books.download', compact('books'));
+        return $pdf->download('Books.pdf');
+    }
+
+    //$books = Book::whereBetween('id', [1, 50])->get();
+    //$books = Book::where('title', 'LIKE', '%officia%')->get();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

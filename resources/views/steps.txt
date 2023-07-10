@@ -1,0 +1,33 @@
+1. create project: composer create-project laravel/laravel project_name
+2. vendor file: composer install
+3. copy: cp .env .env.example
+4. run php artisan key:generator to generate app_key
+5. create database in mysql
+6. Set db_name and password in .env file
+7. run php artisan config:Cache
+8. php artisan migrate for run schema on db
+9. php artisan make:model Book
+10. php artisan make:migration create_books_table
+11. php artisan make:controller BookController --model=Book
+12. make books and layouts folder in view and add index.blade.php and layout.blade.php correspondingly
+13. add html and bootstrap cdn to index.blade.php
+14. make a h1 tag to print sometheing and add 
+15. include use App\Http\Controllers\BookController in web.php route;
+16. Route::get('/books',[BookController::class,'index'])->name('books.index') in web.php
+17. in BookController index function fetch all data from books table and return return view('books.index', compact('books'));
+18. add general html and header on layout.blade.php
+19. extend layouts.layout , then add section and in section put table for books in indenx.blade.php
+20. create book factory using php artisan make:factory BookFactory --model=Book
+21. create seeder for book using php artisan make:seeder BookSeeder
+22. in database seeder add BookSeeder class
+23. in book seeder create book factory \App\Models\Book::factory(100)->create();
+24. in BookFacotry's definiton function add faker() query in return
+25. for pagination allow bootstrap in app>providers>appServiceProvider>boot function by writing Illuminate\Pagination\Paginator::useBootstrap()
+26. change Book:: all of BookController to Book::paginate(15)
+27. crate a view create.blade.php
+28. add bootstrp form for title,author,isbn,price,availability field
+29. add it to route and controller create
+30. add button on index and create page
+31. add book.store route and form action for submit button
+32. on BookController add validation and assign attribute
+33. 
