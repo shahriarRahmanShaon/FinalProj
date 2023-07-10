@@ -123,7 +123,7 @@ class BookController extends Controller
 
     public function generatePdf()
     {
-        $books = Book::get();
+        $books = Book::whereBetween('id', [1, 50])->get();
         $pdf = PDF::loadView('books.download', compact('books'));
 
         return $pdf->download('Books.pdf');

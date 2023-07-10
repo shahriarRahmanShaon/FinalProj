@@ -14,7 +14,7 @@
             <input type="submit" value="Search">
         </div>
     </form>
-    <table>
+    <table class="table table-striped">
         <tr>
             <th>Title</th>
             <th>Author</th>
