@@ -1,18 +1,28 @@
-2. Change .env example to .env
+1. if vendor is not specified then - composer install
+
+2.Change .env example to .env
+
 3. Change database name
+
 4. Create key -  php artisan key:generate
+
 5. php artisan make:model name
+
 6. php artisan make:migration create_names_table
 	- Change schema on books migration
 	- php artisan migrate
+
 7. Create controller - php artisan make:controller BookController --model=ModelName
+
 8. Create views
 	- Views(folder)
 		- layouts(folder)
 			- layout.blade.php
 		- books(folder)
 			- index.blade.php
+
 9. web.php - controller - view
+
 10. fake data - php artisan make:Factory BookFactory --model=ModelName
 				- edit BookFactory what to create:::: return [
             'title' => $this->faker->sentence(),
